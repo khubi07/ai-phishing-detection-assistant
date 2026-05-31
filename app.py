@@ -6,7 +6,7 @@ input_sms = st.text_area("Paste Email Content")
 if st.button('Predict'):
 
     response = requests.post(
-        "http://127.0.0.1:8000/analyze",
+        "https://ai-phishing-detection-assistant.onrender.com/analyze",
         json={
             "text": input_sms
         }
