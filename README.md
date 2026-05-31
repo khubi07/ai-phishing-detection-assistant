@@ -21,23 +21,25 @@ Built to demonstrate the integration of NLP, Machine Learning, FastAPI, and Gene
 
 ### Main Interface
 
-*Add screenshot here*
+## Screenshot
+
+![App Screenshot](screenshots/detection.png)
 
 ### Phishing Analysis Example
 
-*Add screenshot here*
+![App Screenshot](screenshots/summary.png)
 
 ### Legitimate Email Analysis Example
 
-*Add screenshot here*
+![App Screenshot](screenshots/riskExplain.png)
 
 ---
 
 ## Live Demo
 
-**Frontend:** *Add deployment link*
+**Frontend:** [https://ai-phishing-detection-assistant-gk5nawnknhvaen5hdsf4ra.streamlit.app/]
 
-**Backend API Docs:** *Add deployment link*
+**Backend API Docs:** [https://ai-phishing-detection-assistant.onrender.com/docs]
 
 ---
 
