@@ -1,5 +1,12 @@
 venv\Scripts\activate
-steps incolved in this project
+
+---RUN THE APP--
+streamlit run app.py
+
+--RUN FASTAPI--
+uvicorn api:app --reload
+
+----steps incolved in this project---
 1) data cleaning
 2) EDA
 3)text preprocessing

@@ -1,65 +1,49 @@
 import streamlit as st
-import pickle
-import string
-import nltk
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('stopwords')
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-ps = PorterStemmer()
+import requests
 
-def transform_text(text):
-    #1. converted to lower
-    text = text.lower()
-
-    #2. tokenize the words and return list
-    text = nltk.word_tokenize(text) 
-    # we can run a loop on list to remove special char
-
-    #3. removed special char
-    y = []
-    for i in text:
-        if i.isalnum():
-            y.append(i)
-
-    #4. removed stopwords and punctuation
-    text = y[:]
-    y.clear()
-    
-    for i in text:
-        if i not in stopwords.words('english') and i not in string.punctuation:
-            y.append(i)
-
-    #5. stemming
-    text = y[:]
-    y.clear()
-    for i in text:
-        y.append(ps.stem(i))
-    return " ".join(y)
-    
-
-
-tfidf = pickle.load(open('vectorizer.pkl','rb'))
-model = pickle.load(open('model.pkl','rb'))
-
-st.title("Email/SMS classifier")
-input_sms = st.text_area("Enter the message")
+st.title("AI Phishing Detection Assistant")
+input_sms = st.text_area("Paste Email Content")
 if st.button('Predict'):
 
+    response = requests.post(
+        "http://127.0.0.1:8000/analyze",
+        json={
+            "text": input_sms
+        }
+    )
 
-    # now we'll hv to work in 4 processes
-    # 1. preprocess 
-    transformed_text = transform_text(input_sms)
+    data = response.json()
 
-    # 2. vectorize. 
-    vector_input = tfidf.transform([transformed_text])
+    st.metric("Risk Score", f"{data['risk_score']}/100")
 
-    # 3predict.
-    result = model.predict(vector_input)[0]
+    st.subheader("Prediction")
+    st.write(data["prediction"])
 
-    #  4. display
-    if result == 1:
-        st.header("spam")
+    st.subheader("AI Summary")
+    st.write(data["summary"])
+
+    st.subheader("Detected Indicators")
+    st.write(data["indicators"])
+
+    st.subheader("AI Risk Explanation")
+    st.write(data["explanation"])
+
+    prediction = data["prediction"]
+    risk_score = data["risk_score"]
+
+    if data["risk_score"] >= 70:
+
+        st.warning("⚠️ Security Recommendation")
+
+        st.write("""
+        • Do not reply to this message.
+        • Do not click suspicious links.
+        • Do not share passwords or personal information.
+        • Verify the sender independently.
+        """)
+
     else:
-        st.header("not spam")
+
+        st.subheader("Suggested Reply")
+        st.write(data["reply"])
+        
