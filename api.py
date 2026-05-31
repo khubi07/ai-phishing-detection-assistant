@@ -1,6 +1,8 @@
+import time
 import string
 import nltk
 import pickle
+
 
 # downloads
 nltk.download('punkt')
@@ -182,6 +184,9 @@ def predict(request: EmailRequest):
 @app.post("/analyze")
 def analyze(request: EmailRequest):
 
+    start_time = time.time()
+    ml_start = time.time()
+
     transformed_text = transform_text(request.text)
 
     vector_input = tfidf.transform([transformed_text])
@@ -189,6 +194,13 @@ def analyze(request: EmailRequest):
     result = model.predict(vector_input)[0]
 
     prob = model.predict_proba(vector_input)
+
+    ml_end = time.time()
+
+    ml_latency_ms = round(
+        (ml_end - ml_start) * 1000,
+        2
+    )
 
     spam_probability = prob[0][1]
 
@@ -211,11 +223,17 @@ def analyze(request: EmailRequest):
     if risk_score < 70:
         reply = generate_reply(request.text)
 
+    end_time = time.time()
+
+    latency = round(end_time - start_time, 2)
+
     return {
     "prediction": prediction,
     "risk_score": risk_score,
     "summary": summary,
     "explanation": explanation,
     "indicators": indicators,
-    "reply": reply
+    "reply": reply,
+    "latency": latency,
+    "ml_latency_ms": ml_latency_ms
 }

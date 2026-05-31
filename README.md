@@ -1,42 +1,162 @@
-## 🚀 Live Demo
+# AI Phishing Detection Assistant
 
-👉 Click here to try the app:  
-🔗 https://spam-classifier-5avvx6zxtgtcl9of8tdcdj.streamlit.app/
+An AI-powered phishing detection system that combines Machine Learning and Large Language Models (LLMs) to analyze emails, assess risk, explain threats, and generate reply suggestions.
+
+## Overview
+
+The application analyzes email content and provides:
+
+* Phishing/Spam prediction
+* Risk score assessment
+* AI-generated email summary
+* Threat explanation
+* Suspicious indicator detection
+* Reply recommendation for legitimate emails
+
+Built to demonstrate the integration of NLP, Machine Learning, FastAPI, and Generative AI in a cybersecurity-focused application.
+
+---
+
+## Screenshots
+
+### Main Interface
+
+*Add screenshot here*
+
+### Phishing Analysis Example
+
+*Add screenshot here*
+
+### Legitimate Email Analysis Example
+
+*Add screenshot here*
+
+---
+
+## Live Demo
+
+**Frontend:** *Add deployment link*
+
+**Backend API Docs:** *Add deployment link*
+
+---
+
+## Architecture
+
+```text
+Email Input
+    ↓
+Streamlit Frontend
+    ↓
+FastAPI Backend
+    ↓
+TF-IDF + ML Classifier
+    ↓
+Groq LLM Analysis
+    ↓
+Risk Score + Summary + Explanation + Reply
+```
+
+---
+
+## Dataset
+
+### Primary Dataset
+
+The deployed model was trained on the SMS Spam Collection dataset containing legitimate and spam messages.
+
+| Metric  | Value               |
+| ------- | ------------------- |
+| Samples | 5,572               |
+| Classes | Spam / Ham          |
+| Type    | Text Classification |
+
+### Dataset Experiments
+
+Multiple phishing-oriented email datasets were evaluated during development.
+
+Experiments included:
+
+* Phishing email datasets
+* Synthetic phishing corpora
+* Multi-category phishing datasets containing:
+
+  * Credential Harvesting
+  * Financial Scams
+  * Authority Scams
+  * Social Engineering
+  * Tech Support Scams
+
+Several datasets produced near-perfect offline metrics but demonstrated poor real-world generalization during manual testing. These experiments informed the final model selection process.
+
+---
+
+## Model Evaluation
+
+### Models Tested
+
+| Model                        | Status    |
+| ---------------------------- | --------- |
+| Multinomial Naive Bayes      | Selected  |
+| Logistic Regression          | Evaluated |
+| Support Vector Machine (SVM) | Evaluated |
+
+### Selection Criteria
+
+Models were compared using:
+
+* Accuracy
+* Precision
+* Recall
+* F1 Score
+* Manual phishing-email testing
+* Real-world generalization behavior
+
+The final model was selected based on overall performance and deployment suitability.
+
+---
 
 
-📩 SMS Spam Classifier using Machine Learning
-A machine learning–based SMS Spam Classifier that predicts whether a given message is Spam or Ham (Not Spam) using Natural Language Processing (NLP) techniques and supervised learning models.
-This project demonstrates the complete ML pipeline — from data preprocessing and feature extraction to model training, evaluation, and comparison.
+## Tech Stack
 
-🛠️ Technologies & Tools Used
+* Python
+* Streamlit
+* FastAPI
+* Scikit-learn
+* NLTK
+* Groq API
+* Pandas
+* NumPy
 
-Programming Language: Python
-Libraries & Frameworks:
-NumPy
-Pandas
-Matplotlib
-Seaborn
-NLTK
-Scikit-learn
-WordCloud
-Environment: Jupyter Notebook
+---
 
-📊 Dataset
+## Performance
 
-Dataset: SMS Spam Collection Dataset
-Classes:
-ham – Normal messages
-spam – Unwanted or fraudulent messages
-Target Encoding:
-ham → 0
-spam → 1
+| Metric                   | Value    |
+| ------------------------ | -------- |
+| ML Prediction Latency    | ~9.6 ms  |
+| End-to-End Analysis Time | ~2.3 sec |
 
-🤖 Machine Learning Models Implemented
+The ML classifier performs inference in milliseconds, while most response time comes from LLM-powered analysis and explanation generation.
 
-Naive Bayes
-Logistic Regression
-Decision Tree
-Random Forest
-Extra Trees Classifier
-Gradient Boosting Classifier
-Each model was trained and evaluated on the same dataset for fair comparison.
+---
+
+## Installation
+
+```bash
+git clone <repository-url>
+
+cd <repository-name>
+
+pip install -r requirements.txt
+
+uvicorn api:app --reload
+
+streamlit run app.py
+```
+
+---
+
+## Disclaimer
+
+This project is intended for educational and research purposes and should not be considered a replacement for enterprise-grade email security solutions.

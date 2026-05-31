@@ -16,6 +16,16 @@ if st.button('Predict'):
 
     st.metric("Risk Score", f"{data['risk_score']}/100")
 
+    st.metric(
+        "Analysis Time",
+        f"{data['latency']} sec"
+    )
+
+    st.metric(
+        "ML Prediction Time",
+        f"{data['ml_latency_ms']} ms"
+    )
+
     st.subheader("Prediction")
     st.write(data["prediction"])
 
@@ -27,6 +37,8 @@ if st.button('Predict'):
 
     st.subheader("AI Risk Explanation")
     st.write(data["explanation"])
+
+    
 
     prediction = data["prediction"]
     risk_score = data["risk_score"]
